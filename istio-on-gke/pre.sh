@@ -4,6 +4,7 @@ export CLUSTER_NAME="test-istio"
 gcloud container clusters \
 	create --preemptible \
 	--zone $ZONE \
+	--num-nodes 5 \
 	$CLUSTER_NAME
 
 gcloud container clusters \
