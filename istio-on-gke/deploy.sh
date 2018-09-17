@@ -25,7 +25,9 @@ istio-$ISTIO_VERSION/bin/istioctl create -f istio-$ISTIO_VERSION/samples/bookinf
 export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+export PROM_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2-prometheus")].port}')
 
 gcloud compute firewall-rules create allow-gateway-http --allow tcp:$INGRESS_PORT
 gcloud compute firewall-rules create allow-gateway-https --allow tcp:$SECURE_INGRESS_PORT
+gcloud compute firewall-rules create allow-gateway-promhttp2 --allow tcp:$PROM_PORT
 
