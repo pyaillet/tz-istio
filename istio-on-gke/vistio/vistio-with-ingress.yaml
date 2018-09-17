@@ -31,7 +31,7 @@ data:
           label: response_code
           warningRegex: ^4..$
         target:
-          label: destination_service
+          label: destination_app
     globalLevel:
       clusterConnections:
       - prometheusURL: http://prometheus.istio-system:9090
