@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: details
+spec:
+  hosts:
+  - details
+  http:
+  - route:
+    - destination:
+        host: details
+    appendHeaders:
+      x-delay-duration: "2"
+      x-delay-rate: "100"
+    timeout: 1s
+

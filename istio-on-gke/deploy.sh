@@ -14,13 +14,13 @@ fi
 # kubectl apply -f istio-$ISTIO_VERSION/install/kubernetes/istio-demo-auth.yaml
 kubectl apply -f istio-$ISTIO_VERSION/install/kubernetes/istio-demo.yaml
 
-kubectl label namespace default istio-injection=enabled
+#kubectl label namespace default istio-injection=enabled
 
 # Deploy sample app
 
-kubectl apply -f istio-$ISTIO_VERSION/samples/bookinfo/platform/kube/bookinfo.yaml
+#kubectl apply -f istio-$ISTIO_VERSION/samples/bookinfo/platform/kube/bookinfo.yaml
 
-istio-$ISTIO_VERSION/bin/istioctl create -f istio-$ISTIO_VERSION/samples/bookinfo/networking/bookinfo-gateway.yaml
+#istio-$ISTIO_VERSION/bin/istioctl create -f istio-$ISTIO_VERSION/samples/bookinfo/networking/bookinfo-gateway.yaml
 
 export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
