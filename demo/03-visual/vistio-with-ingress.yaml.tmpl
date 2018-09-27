@@ -23,15 +23,15 @@ data:
           statusType: danger
           title: '[{{ .value }}] High Error Rate'
         prometheusURL: http://prometheus.istio-system:9090
-        query: sum(rate(istio_requests_total[1m])) by (source_app,destination_service,response_code)
+        query: sum(rate(istio_requests_total[1m])) by (source_workload,destination_workload,response_code)
         source:
-          label: source_app
+          label: source_workload
         status:
           dangerRegex: ^5..$
           label: response_code
           warningRegex: ^4..$
         target:
-          label: destination_app
+          label: destination_workload
     globalLevel:
       clusterConnections:
       - prometheusURL: http://prometheus.istio-system:9090
@@ -116,7 +116,7 @@ spec:
             - containerPort: 8080
           env:
             - name: UPDATE_URL
-              value: http://vistio-api.35.233.77.182.nip.io/graph
+              value: http://vistio-api.{{LB_ADDRESS}}.nip.io/graph
             - name: INTERVAL
               value: "1000"
             - name: MAX_REPLAY_OFFSET
@@ -185,7 +185,7 @@ spec:
           image: nghialv2607/k8s-config-reloader:v0.1.0
           imagePullPolicy: IfNotPresent
           args:
-            - --config.promviz-reload-url=http://vistio-api.35.233.77.182.nip.io/reload
+            - --config.promviz-reload-url=http://vistio-api.{{LB_ADDRESS}}.nip.io/reload
             - --config.promviz-config-dir=/etc/vistio
             - --config.log-level=info
           resources:

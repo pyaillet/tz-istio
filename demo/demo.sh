@@ -62,9 +62,13 @@ kubectl apply -f vistio/vistio-with-ingress.yaml
 kubectl apply -f vistio/vistio-svc.yaml
 
 open http://vistio-web.$INGRESS_HOST.nip.io
-./hey -n 1000 -c 50 http://${LB_ADDRESS}/api/v1/products/1
+./hey -n 500 -c 50 http://${LB_ADDRESS}/api/v1/products/1
 
-# TODO: Ajouter des faults pour constater la visu
+# Ajouter des faults pour constater la visu
+./istioctl replace -f 02-patterns/fault.yaml
+./hey -n 500 -c 50 http://${LB_ADDRESS}/api/v1/products/1
+
+./istioctl delete -f 02-patterns/fault.yaml
 
 ####
 #### Part 4 : Routing
