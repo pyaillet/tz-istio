@@ -56,6 +56,15 @@ kubectl describe pods <productpage pod>
 ####
 #### Part 3 : Observation
 ####
+sed -e "s/{{LB_ADDRESS}}/$INGRESS_HOST/" vistio/vistio-svc.yaml.tmpl > vistio/vistio-svc.yaml
+
+kubectl apply -f vistio/vistio-with-ingress.yaml
+kubectl apply -f vistio/vistio-svc.yaml
+
+open http://vistio-web.$INGRESS_HOST.nip.io
+./hey -n 1000 -c 50 http://${LB_ADDRESS}/api/v1/products/1
+
+# TODO: Ajouter des faults pour constater la visu
 
 ####
 #### Part 4 : Routing
